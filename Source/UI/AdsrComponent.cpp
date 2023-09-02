@@ -16,7 +16,7 @@ AdsrComponent::AdsrComponent(juce::AudioProcessorValueTreeState& apvts)
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
-    setSize(400, 200);
+    setSize(400, 250);
     setupSlider(attackSlider, "Attack", attackLabel, 0.1f, 3.f, 0.1f);
     setupSlider(decaySlider, "Decay", decayLabel, 0.1f, 3.f, 0.1f);
     setupSlider(sustainSlider, "Sustain", sustainlabel, 0.1f, 1.f, 0.1f);

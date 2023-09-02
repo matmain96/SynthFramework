@@ -13,6 +13,7 @@
 #include "SynthSound.h"
 #include "Data/AdsrData.h"
 #include "Data/OscData.h"
+#include "Data/FilterData.h"
 
 class SynthVoice : public juce::SynthesiserVoice 
 {
@@ -34,15 +35,17 @@ class SynthVoice : public juce::SynthesiserVoice
 
         void setADSRParameters(const float attack, const float decay, const float sustain, const float release);
 
+        void setFilterParameters(const int filterType, const float frequency, const float resonance);
+
         void setOscType(const int type);
         OscData& getOscillator();
         AdsrData& getAdsr();
-
+        FilterData& getFilter();
 
     private:
         AdsrData adsr;
         juce::AudioBuffer<float> synthBuffer;
-
+        FilterData filter;
         OscData osc; 
         juce::dsp::Gain<float> gain;
         bool isPrepared;

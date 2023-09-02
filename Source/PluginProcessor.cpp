@@ -121,7 +121,6 @@ void SynthFrameworkAudioProcessor::prepareToPlay (double sampleRate, int samples
             voice->prepareToPlay(sampleRate,samplesPerBlock,getNumOutputChannels());
         }
     }
-
 }
 
 void SynthFrameworkAudioProcessor::releaseResources()
@@ -177,11 +176,15 @@ void SynthFrameworkAudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
 
             float fmFreq = apvts.getRawParameterValue("FMFREQ")->load();
             float fmDepth = apvts.getRawParameterValue("FMDEPTH")->load();
+            auto filterType = apvts.getRawParameterValue("FILTERTYPE")->load();
+            auto filterFrequency = apvts.getRawParameterValue("FILTERCUTOFF")->load();
+            auto filterResonance = apvts.getRawParameterValue("FILTERRESONANCE")->load();
 
             aVoice->getOscillator().updateFm(fmDepth, fmFreq);
 
             aVoice->setOscType(apvts.getRawParameterValue("OSC")->load());
             aVoice->setADSRParameters(attack, decay, sustain, release);
+            aVoice->setFilterParameters(filterType, filterFrequency, filterResonance);
         }
     }
 
@@ -219,16 +222,24 @@ juce::AudioProcessorValueTreeState::ParameterLayout SynthFrameworkAudioProcessor
 {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> layout;
 
+    //Wave type
     layout.push_back(std::make_unique<juce::AudioParameterChoice>("OSC", "Osc",juce::StringArray { "Sine", "Saw", "Square"},0));
 
+    //ADSR
     layout.push_back(std::make_unique<juce::AudioParameterFloat>("GAIN", "Gain", 0.0f, 1.0f, 0.5f));
     layout.push_back(std::make_unique<juce::AudioParameterFloat>("ATTACK", "Attack", 0.1f, 3.0f, 0.1f));
     layout.push_back(std::make_unique<juce::AudioParameterFloat>("RELEASE", "Release", 0.1f, 3.0f, 0.1f));
     layout.push_back(std::make_unique<juce::AudioParameterFloat>("DECAY", "Decay", 0.1f, 3.0f, 0.1f));
     layout.push_back(std::make_unique<juce::AudioParameterFloat>("SUSTAIN", "Sustain", 0.1f, 1.0f, 0.5f));
 
+    //FM FREQ
     layout.push_back(std::make_unique<juce::AudioParameterFloat>("FMDEPTH", "FM Depth", 0.1f, 1000.0f, 500.f));
     layout.push_back(std::make_unique<juce::AudioParameterFloat>("FMFREQ", "FM Frequency", 0.1f, 1000.0f, 5.f));
+
+    //FILTER TYPE
+    layout.push_back(std::make_unique<juce::AudioParameterChoice>("FILTERTYPE", "Filter", juce::StringArray{ "Low-Pass", "Band-Pass", "High-Pass" }, 0));
+    layout.push_back(std::make_unique<juce::AudioParameterFloat>("FILTERCUTOFF", "Filter Cutoff", juce::NormalisableRange<float> { 20.f, 20000.f, 0.6f }, 200.f));
+    layout.push_back(std::make_unique<juce::AudioParameterFloat>("FILTERRESONANCE", "Filter Resonance", juce::NormalisableRange<float> { 1.f, 10.f, 0.1f }, 1.f));
 
 
     return { layout.begin(), layout.end() };

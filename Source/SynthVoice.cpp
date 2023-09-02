@@ -57,6 +57,7 @@ void SynthVoice::prepareToPlay(double sampleRate, int samplesPerBlock, int outpu
 
     osc.prepareToPlay(spec);
     gain.prepare(spec);
+    filter.prepareToPlay(sampleRate, samplesPerBlock, outputChannels);
 
     gain.setGainLinear(0.01f);
 
@@ -81,7 +82,7 @@ void SynthVoice::renderNextBlock(juce::AudioBuffer< float >& outputBuffer, int s
     osc.getNextAudioBlock(audioBlock);
     gain.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
     adsr.applyEnvelopeToBuffer(synthBuffer, 0, numSamples);
-
+    filter.process(audioBlock);
     for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
     {
         outputBuffer.addFrom(channel, startSample, synthBuffer, channel, 0, numSamples);
@@ -103,6 +104,11 @@ void SynthVoice::setOscType(const int type)
     osc.setWaveType(static_cast<WaveType>(type));
 }
 
+void SynthVoice::setFilterParameters(const int filterType, const float frequency, const float resonance)
+{
+    filter.updateParameters(filterType, frequency, resonance);
+}
+
 OscData& SynthVoice::getOscillator()
 {
     return osc;
@@ -111,4 +117,9 @@ OscData& SynthVoice::getOscillator()
 AdsrData& SynthVoice::getAdsr()
 {
     return adsr;
+}
+
+FilterData& SynthVoice::getFilter()
+{
+    return filter;
 }

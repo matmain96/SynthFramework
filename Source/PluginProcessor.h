@@ -12,7 +12,6 @@
 #include "SynthSound.h"
 #include "SynthVoice.h"
 
-
 #define ATTACK_ID "ATTACK"
 #define ATTACK_NAME "Attack"
 #define RELEASE_ID "RELEASE"
@@ -67,7 +66,6 @@ public:
     juce::AudioProcessorValueTreeState& getParameters() {   return apvts;    }
 
 private:
-
     juce::AudioProcessorValueTreeState::ParameterLayout createApvtsLayout();
     juce::Synthesiser mySynth;
     juce::AudioProcessorValueTreeState apvts;

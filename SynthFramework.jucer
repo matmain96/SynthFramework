@@ -9,6 +9,8 @@
       <GROUP id="{57642982-8B99-CE5F-FB1C-F27B0D0677DB}" name="Data">
         <FILE id="FNKrKS" name="AdsrData.cpp" compile="1" resource="0" file="Source/Data/AdsrData.cpp"/>
         <FILE id="u4PRrK" name="AdsrData.h" compile="0" resource="0" file="Source/Data/AdsrData.h"/>
+        <FILE id="hTfYxJ" name="FilterData.cpp" compile="1" resource="0" file="Source/Data/FilterData.cpp"/>
+        <FILE id="wgFYix" name="FilterData.h" compile="0" resource="0" file="Source/Data/FilterData.h"/>
         <FILE id="Md6FKJ" name="OscData.cpp" compile="1" resource="0" file="Source/Data/OscData.cpp"/>
         <FILE id="r9nVHI" name="OscData.h" compile="0" resource="0" file="Source/Data/OscData.h"/>
       </GROUP>
@@ -16,6 +18,10 @@
         <FILE id="ndf2Q4" name="AdsrComponent.cpp" compile="1" resource="0"
               file="Source/UI/AdsrComponent.cpp"/>
         <FILE id="MfdEMv" name="AdsrComponent.h" compile="0" resource="0" file="Source/UI/AdsrComponent.h"/>
+        <FILE id="LDFEKt" name="FilterComponent.cpp" compile="1" resource="0"
+              file="Source/UI/FilterComponent.cpp"/>
+        <FILE id="GuF7IB" name="FilterComponent.h" compile="0" resource="0"
+              file="Source/UI/FilterComponent.h"/>
         <FILE id="BDmGvB" name="OscComponent.cpp" compile="1" resource="0"
               file="Source/UI/OscComponent.cpp"/>
         <FILE id="DZPTgq" name="OscComponent.h" compile="0" resource="0" file="Source/UI/OscComponent.h"/>
