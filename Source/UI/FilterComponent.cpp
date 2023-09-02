@@ -14,7 +14,7 @@
 //==============================================================================
 FilterComponent::FilterComponent(juce::AudioProcessorValueTreeState& apvts)
 {
-    setSize(400, 150);
+    setSize(400, 200);
     setupSlider(cutoffSlider, "Cutoff", cutoffLabel, 20.f, 20000.f, 0.6f);
     setupSlider(resonanceSlider, "Resonance", resonanceLabel, 1.f, 10.f, 0.1f);
     cutoffAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, "FILTERCUTOFF", cutoffSlider);
@@ -38,11 +38,9 @@ void FilterComponent::paint (juce::Graphics& g)
        You should replace everything in this method with your own
        drawing code..
     */
-
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   // clear the background
-
-    g.setColour (juce::Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
+    g.fillAll(juce::Colours::cadetblue);   // clear the background
+    g.setColour(juce::Colours::cadetblue);   // clear the background
+    g.drawRect (getLocalBounds(), 2);   // draw an outline around the component
 
     g.setColour (juce::Colours::white);
     g.setFont (14.0f);

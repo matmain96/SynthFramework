@@ -11,16 +11,23 @@
 
 //==============================================================================
 SynthFrameworkAudioProcessorEditor::SynthFrameworkAudioProcessorEditor (SynthFrameworkAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p), adsr(audioProcessor.getParameters()), osc(audioProcessor.getParameters()), filter(audioProcessor.getParameters())
+    : AudioProcessorEditor (&p)
+    , audioProcessor (p)
+    , adsr(audioProcessor.getParameters(), juce::String{ "ATTACK" }, juce::String{ "DECAY" }, juce::String{ "SUSTAIN" }, juce::String{ "RELEASE" })
+    , osc(audioProcessor.getParameters())
+    , filter(audioProcessor.getParameters())
+    , modAdsr(audioProcessor.getParameters(), juce::String{ "MODATTACK" }, juce::String{ "MODDECAY" }, juce::String{ "MODSUSTAIN" }, juce::String{ "MODRELEASE" })
 
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 550);
+    setSize (400, 800);
 
     addAndMakeVisible(adsr);
     addAndMakeVisible(osc);
     addAndMakeVisible(filter);
+    addAndMakeVisible(modAdsr);
+
 }
 
 SynthFrameworkAudioProcessorEditor::~SynthFrameworkAudioProcessorEditor()
@@ -40,7 +47,8 @@ void SynthFrameworkAudioProcessorEditor::resized()
     // subcomponents in your editor..
     auto bound = getLocalBounds();
     adsr.setBounds(bound.removeFromTop(250));
-    osc.setBounds(bound.removeFromTop(150));
-    filter.setBounds(bound);
+    osc.setBounds(bound.removeFromTop(200));
+    filter.setBounds(bound.removeFromTop(150));
+    modAdsr.setBounds(bound);
 }
 

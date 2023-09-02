@@ -22,6 +22,10 @@
               file="Source/UI/FilterComponent.cpp"/>
         <FILE id="GuF7IB" name="FilterComponent.h" compile="0" resource="0"
               file="Source/UI/FilterComponent.h"/>
+        <FILE id="o6wvYu" name="ModAdsrComponent.cpp" compile="1" resource="0"
+              file="Source/UI/ModAdsrComponent.cpp"/>
+        <FILE id="iTktqC" name="ModAdsrComponent.h" compile="0" resource="0"
+              file="Source/UI/ModAdsrComponent.h"/>
         <FILE id="BDmGvB" name="OscComponent.cpp" compile="1" resource="0"
               file="Source/UI/OscComponent.cpp"/>
         <FILE id="DZPTgq" name="OscComponent.h" compile="0" resource="0" file="Source/UI/OscComponent.h"/>

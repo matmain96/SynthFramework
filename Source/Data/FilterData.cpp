@@ -36,7 +36,7 @@ void FilterData::reset()
     filter.reset();
 }
 
-void FilterData::updateParameters(const int filterType, const float frequency, const float resonance)
+void FilterData::updateParameters(const int filterType, const float frequency, const float resonance, const float modulator)
 {
     switch(filterType)
     {
@@ -52,7 +52,12 @@ void FilterData::updateParameters(const int filterType, const float frequency, c
         default:
             break;
     }
-    
-    filter.setCutoffFrequency(frequency);
+
+    float modFreq = frequency * modulator;
+    modFreq = std::max(modFreq, 20.f);
+    modFreq = std::min(modFreq, 20000.f);
+
+
+    filter.setCutoffFrequency(modFreq);
     filter.setResonance(resonance);
 }

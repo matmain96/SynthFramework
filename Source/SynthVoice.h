@@ -35,15 +35,18 @@ class SynthVoice : public juce::SynthesiserVoice
 
         void setADSRParameters(const float attack, const float decay, const float sustain, const float release);
 
-        void setFilterParameters(const int filterType, const float frequency, const float resonance);
+        void updateFilter(const int filterType, const float frequency, const float resonance);
+        void updateModADSR(const float attack, const float decay, const float sustain, const float release);
 
         void setOscType(const int type);
+
         OscData& getOscillator();
         AdsrData& getAdsr();
         FilterData& getFilter();
 
     private:
         AdsrData adsr;
+        AdsrData modAdsr;
         juce::AudioBuffer<float> synthBuffer;
         FilterData filter;
         OscData osc; 

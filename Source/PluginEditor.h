@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "UI/AdsrComponent.h"
+#include "UI/ModAdsrComponent.h"
 #include "UI/OscComponent.h"
 #include "UI/FilterComponent.h"
 
@@ -33,6 +34,7 @@ private:
     SynthFrameworkAudioProcessor& audioProcessor;
 
     AdsrComponent adsr;
+    ModAdsrComponent modAdsr;
     OscComponent osc;
     FilterComponent filter;
 

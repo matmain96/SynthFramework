@@ -169,22 +169,29 @@ void SynthFrameworkAudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
     {
         if (auto aVoice = dynamic_cast<SynthVoice*>(mySynth.getVoice(voiceNum)))
         {
+            float fmFreq = apvts.getRawParameterValue("FMFREQ")->load();
+            float fmDepth = apvts.getRawParameterValue("FMDEPTH")->load();
+
             float attack = apvts.getRawParameterValue("ATTACK")->load();
             float release = apvts.getRawParameterValue("RELEASE")->load();
             float sustain = apvts.getRawParameterValue("SUSTAIN")->load();
             float decay = apvts.getRawParameterValue("DECAY")->load();
 
-            float fmFreq = apvts.getRawParameterValue("FMFREQ")->load();
-            float fmDepth = apvts.getRawParameterValue("FMDEPTH")->load();
             auto filterType = apvts.getRawParameterValue("FILTERTYPE")->load();
             auto filterFrequency = apvts.getRawParameterValue("FILTERCUTOFF")->load();
             auto filterResonance = apvts.getRawParameterValue("FILTERRESONANCE")->load();
+
+            float modAttack = apvts.getRawParameterValue("MODATTACK")->load();
+            float modRelease = apvts.getRawParameterValue("MODRELEASE")->load();
+            float modSustain = apvts.getRawParameterValue("MODSUSTAIN")->load();
+            float modDecay = apvts.getRawParameterValue("MODDECAY")->load();
 
             aVoice->getOscillator().updateFm(fmDepth, fmFreq);
 
             aVoice->setOscType(apvts.getRawParameterValue("OSC")->load());
             aVoice->setADSRParameters(attack, decay, sustain, release);
-            aVoice->setFilterParameters(filterType, filterFrequency, filterResonance);
+            aVoice->updateModADSR(modAttack, modDecay, modSustain, modRelease);
+            aVoice->updateFilter(filterType, filterFrequency, filterResonance);
         }
     }
 
@@ -226,11 +233,17 @@ juce::AudioProcessorValueTreeState::ParameterLayout SynthFrameworkAudioProcessor
     layout.push_back(std::make_unique<juce::AudioParameterChoice>("OSC", "Osc",juce::StringArray { "Sine", "Saw", "Square"},0));
 
     //ADSR
-    layout.push_back(std::make_unique<juce::AudioParameterFloat>("GAIN", "Gain", 0.0f, 1.0f, 0.5f));
+    layout.push_back(std::make_unique<juce::AudioParameterFloat>("GAIN", "Gain", 0.0f, 1.0f, 1.0f));
     layout.push_back(std::make_unique<juce::AudioParameterFloat>("ATTACK", "Attack", 0.1f, 3.0f, 0.1f));
     layout.push_back(std::make_unique<juce::AudioParameterFloat>("RELEASE", "Release", 0.1f, 3.0f, 0.1f));
     layout.push_back(std::make_unique<juce::AudioParameterFloat>("DECAY", "Decay", 0.1f, 3.0f, 0.1f));
     layout.push_back(std::make_unique<juce::AudioParameterFloat>("SUSTAIN", "Sustain", 0.1f, 1.0f, 0.5f));
+
+    //MOD ADSR
+    layout.push_back(std::make_unique<juce::AudioParameterFloat>("MODATTACK", "Attack", 0.1f, 3.0f, 0.1f));
+    layout.push_back(std::make_unique<juce::AudioParameterFloat>("MODRELEASE", "Release", 0.1f, 3.0f, 0.1f));
+    layout.push_back(std::make_unique<juce::AudioParameterFloat>("MODDECAY", "Decay", 0.1f, 3.0f, 0.1f));
+    layout.push_back(std::make_unique<juce::AudioParameterFloat>("MODSUSTAIN", "Sustain", 0.1f, 1.0f, 0.5f));
 
     //FM FREQ
     layout.push_back(std::make_unique<juce::AudioParameterFloat>("FMDEPTH", "FM Depth", 0.1f, 1000.0f, 500.f));
